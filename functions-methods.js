@@ -9,8 +9,18 @@
 // getEmailDomain("t.mellink@novi.nl") geeft novi.nl
 // getEmailDomain("a.wiersma@outlook.com") geeft outlook.com
 
+function getEmailDomain (email) {
+    return email.split("@");
+}
+const splitEmail = getEmailDomain("n.eeken@novi-education.nl");
+console.log(splitEmail[1]);
 
 
+function getEmailDomain2 (email) {
+    return email.substring(email.indexOf("@"));
+}
+const splitEmail2 = getEmailDomain2("n.eeken@novi-education.nl");
+console.log(splitEmail2.substring(1));
 
 /* Opdracht  2 */
 // Schrijf een functie genaamd typeOfEmail, die een emailadres verwacht. De functie checkt of het emailadres een novi domein heeft (medewerker), een novi-education domein (student), of extern domein (zoals gmail of outlook)
@@ -20,7 +30,19 @@
 // typeOfEmail("novi.nlaapjesk@outlook.com") geeft geeft "Extern" <-- deze moet het ook doen!
 // typeOfEmail("a.wiersma@outlook.com") geeft "Extern"
 
-
+function typeOfEmail (email) {
+    console.log(email.split("@")[1])
+    if (email.split("@")[1].includes("novi-education.nl")) {
+        console.log("Student");
+    }
+    else if (email.split("@")[1].includes("novi.nl")) {
+        console.log("Medewerker");
+    }
+    else {
+        console.log("Extern");
+    }
+}
+typeOfEmail("novi.nlaapjesk@outlook.com");
 
 /* Opdracht  3 */
 // Schrijf een functie genaamd checkEmailValidity, die een emailadres verwacht en checkt of het emailadres valide is. De functie returned true of false, afhankelijk van de uitkomst.
@@ -34,3 +56,20 @@
 // checkEmailValidity("n.eekenanovi.nl") geeft false - want geen @
 // checkEmailValidity("n.eeken@novinl.") geeft false - want de punt mag niet als laatst
 // checkEmailValidity("tessmellink@novi,nl") geeft false - want er staat een komma in
+
+function checkEmailValidity (email) {
+    if (email.includes("@") && !email.charAt(email.length - 1).includes(".") && !email.includes(",")){
+        return true
+    }
+    else {
+        return false
+    }
+}
+const check = checkEmailValidity("n.eeken@novinl.");
+console.log(check);
+
+function checkEmailValiditySimplified (email) {
+    return !!(email.includes("@") && !email.charAt(email.length - 1).includes(".") && !email.includes(","));
+}
+const check2 = checkEmailValiditySimplified("n.eeken@novi.nl");
+console.log(check2);
