@@ -1,7 +1,6 @@
 // Je gaat functies schrijven die we kunnen hergebruiken om sommige emailadressen te checken. Nu zul je gaan merken hoe handig functies kunnen zijn!
 // Je zult hier methoden van het String Object voor nodig hebben, dus pak de paragraaf op EdHub over het String Object er even bij.
 
-
 /* Opdracht  1 */
 // Schrijf een functie genaamd getEmailDomain, die een emailadres verwacht en de domeinnaam teruggeeft. Een domeinnaam is hetgeen dat na het @ in het adres staat
 // ---- Verwachte uitkomsten:
@@ -9,8 +8,28 @@
 // getEmailDomain("t.mellink@novi.nl") geeft novi.nl
 // getEmailDomain("a.wiersma@outlook.com") geeft outlook.com
 
+// Hier heb ik een .split gebruikt
+function getEmailDomainWithSplit (email) {
+    let domainName = "";
+    domainName = email.split("@")[1];
+    return domainName;
+}
+const splitEmail = getEmailDomainWithSplit("m.van.der.staaij@novi-education.nl");
+console.log("Domain-name: " + splitEmail);
 
+// Hier heb ik een indexOf gebruikt
+function getEmailDomainWithIndexOf (email) {
+    let domainName = "";
+    domainName = email.substring(email.indexOf("@"));
+    domainName = domainName.substring(1);
+    return domainName;
+}
+const splitEmail2 = getEmailDomainWithIndexOf("n.eeken@novi.nl");
+console.log("Domain-name: " + splitEmail2);
 
+// arrow-function met .split (omdat .split de kortste versie is)
+const getEmailDomainArrow = (email) => { return email.split("@")[1] }
+console.log("Uitkomst arrow function: " + getEmailDomainArrow("t.mellink@novi.nl"));
 
 /* Opdracht  2 */
 // Schrijf een functie genaamd typeOfEmail, die een emailadres verwacht. De functie checkt of het emailadres een novi domein heeft (medewerker), een novi-education domein (student), of extern domein (zoals gmail of outlook)
@@ -20,7 +39,33 @@
 // typeOfEmail("novi.nlaapjesk@outlook.com") geeft geeft "Extern" <-- deze moet het ook doen!
 // typeOfEmail("a.wiersma@outlook.com") geeft "Extern"
 
+function typeOfEmail (email) {
+    if (email.split("@")[1].includes("novi-education.nl")) {
+        console.log("Student");
+    }
+    else if (email.split("@")[1].includes("novi.nl")) {
+        console.log("Medewerker");
+    }
+    else {
+        console.log("Extern");
+    }
+}
+typeOfEmail("novi.nlaapjes@outlook.com");
 
+// Arrow function met switich statement
+const typeOfEmailArrow = (email) => {
+    switch (true) {
+        case email.split("@")[1].includes("novi-education.nl"):
+            console.log("Student");
+            break;
+        case email.split("@")[1].includes("novi.nl"):
+            console.log("Medewerker");
+            break;
+        default:
+            console.log("Extern");
+    }
+}
+typeOfEmailArrow("tessmellink@novi.nl");
 
 /* Opdracht  3 */
 // Schrijf een functie genaamd checkEmailValidity, die een emailadres verwacht en checkt of het emailadres valide is. De functie returned true of false, afhankelijk van de uitkomst.
@@ -34,3 +79,27 @@
 // checkEmailValidity("n.eekenanovi.nl") geeft false - want geen @
 // checkEmailValidity("n.eeken@novinl.") geeft false - want de punt mag niet als laatst
 // checkEmailValidity("tessmellink@novi,nl") geeft false - want er staat een komma in
+
+function checkEmailValidity (email) {
+    if (email.includes("@") && !email.charAt(email.length - 1).includes(".") && !email.includes(",") && email.split("@")[1].includes(".")){
+        return true
+    }
+    else {
+        return false
+    }
+}
+const check = checkEmailValidity("n.eeken@novinl.");
+console.log(check);
+
+// Versimpelde versie, suggestie van Webstorm, hierdoor geleerd wat "!!" doet en hoe je het kunt gebruiken, in dit geval engiszins overbodig.
+function checkEmailValiditySimplified (email) {
+    return !!(email.includes("@") && !email.charAt(email.length - 1).includes(".") && !email.includes(",") && email.split("@")[1].includes("."));
+}
+const check2 = checkEmailValiditySimplified("n.eeken@novi.nl");
+console.log(check2);
+
+// Arrow function
+const checkEmailValidityArrow = (email) => {
+    return !!(email.includes("@") && !email.charAt(email.length - 1).includes(".") && !email.includes(",") && email.split("@")[1].includes(".")) }
+const check3 = checkEmailValidityArrow("marieke.van.der.staaij@novi-educationnl");
+console.log(check3);
